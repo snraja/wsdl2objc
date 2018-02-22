@@ -35,64 +35,57 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.ports = [NSMutableArray array];
-		self.schema = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.ports = [NSMutableArray array];
+        self.schema = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [ports release];
-    [super dealloc];
-}
 
 - (USPort *)portForName:(NSString *)aName
 {
-	for(USPort *port in self.ports) {
-		if([port.name isEqualToString:aName]) {
-			return port;
-		}
-	}
-	
-	USPort *newPort = [USPort new];
-	newPort.service = self;
-	newPort.name = aName;
-	[self.ports addObject:newPort];
-    [newPort release];
-	
-	return newPort;
+    for(USPort *port in self.ports) {
+        if([port.name isEqualToString:aName]) {
+            return port;
+        }
+    }
+    
+    USPort *newPort = [USPort new];
+    newPort.service = self;
+    newPort.name = aName;
+    [self.ports addObject:newPort];
+    
+    return newPort;
 }
 
 - (NSString *)className
 {
-	return [[self.name componentsSeparatedByCharactersInSet:kIllegalClassCharactersSet] componentsJoinedByString:@""];
+    return [[self.name componentsSeparatedByCharactersInSet:kIllegalClassCharactersSet] componentsJoinedByString:@""];
 }
 
 - (NSString *)templateFileHPath
 {
-	return [[NSBundle mainBundle] pathForTemplateNamed:@"Service_H"];
+    return [[NSBundle mainBundle] pathForTemplateNamed:@"Service_H"];
 }
 
 - (NSString *)templateFileMPath
 {
-	return [[NSBundle mainBundle] pathForTemplateNamed:@"Service_M"];
+    return [[NSBundle mainBundle] pathForTemplateNamed:@"Service_M"];
 }
 
 - (NSDictionary *)templateKeyDictionary
 {
-	NSMutableDictionary *returning = [NSMutableDictionary dictionary];
-	
-	[returning setObject:self.name forKey:@"name"];
-	[returning setObject:self.className forKey:@"className"];
-	[returning setObject:self.ports forKey:@"ports"];
-	[returning setObject:self.schema forKey:@"schema"];
-	
-	return returning;
+    NSMutableDictionary *returning = [NSMutableDictionary dictionary];
+    
+    [returning setObject:self.name forKey:@"name"];
+    [returning setObject:self.className forKey:@"className"];
+    [returning setObject:self.ports forKey:@"ports"];
+    [returning setObject:self.schema forKey:@"schema"];
+    
+    return returning;
 }
 
 @end

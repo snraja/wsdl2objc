@@ -35,99 +35,92 @@
 
 - (id)init
 {
-	if((self = [super init]))
-	{
-		self.schemas = [NSMutableArray array];
-		self.targetNamespace = nil;
-	}
-	return self;
+    if((self = [super init]))
+    {
+        self.schemas = [NSMutableArray array];
+        self.targetNamespace = nil;
+    }
+    return self;
 }
 
-- (void)dealloc
-{
-	[schemas release];
-    [targetNamespace release];
-	[super dealloc];
-}
 
 - (USSchema *)schemaForNamespace:(NSString *)aNamespace
 {
-	for(USSchema *schema in self.schemas) {
-		if([schema.fullName isEqualToString:aNamespace]) {
-			return schema;
-		}
-	}
-	
-	USSchema *newSchema = [[USSchema alloc] initWithWSDL:self];
-	newSchema.fullName = aNamespace;
-	[self.schemas addObject:newSchema];
-    [newSchema release];
-	
-	return newSchema;
+    for(USSchema *schema in self.schemas) {
+        if([schema.fullName isEqualToString:aNamespace]) {
+            return schema;
+        }
+    }
+    
+    USSchema *newSchema = [[USSchema alloc] initWithWSDL:self];
+    newSchema.fullName = aNamespace;
+    [self.schemas addObject:newSchema];
+    
+    return newSchema;
 }
 
 - (USSchema *)existingSchemaForPrefix:(NSString *)aPrefix
 {
-	if(aPrefix == nil) return nil;
-	
-	for(USSchema *schema in self.schemas) {
-		if([schema.prefix isEqualToString:aPrefix]) {
-			return schema;
-		}
-	}
-	
-	return nil;
+    if(aPrefix == nil) return nil;
+    
+    for(USSchema *schema in self.schemas) {
+        if([schema.prefix isEqualToString:aPrefix]) {
+            return schema;
+        }
+    }
+    
+    return nil;
 }
 
 - (USType *)typeForNamespace:(NSString *)aNamespace name:(NSString *)aName
 {
-	USSchema *schema = [self schemaForNamespace:aNamespace];
-	
-	if(schema) {
-		USType *type = [schema typeForName:aName];
-		return type;
-	}
-	
-	return nil;
+    USSchema *schema = [self schemaForNamespace:aNamespace];
+    
+    if(schema) {
+        USType *type = [schema typeForName:aName];
+        return type;
+    }
+    
+    return nil;
 }
 
 - (void)addXSDSchema
 {
-	USSchema *xsd = [self schemaForNamespace:@"http://www.w3.org/2001/XMLSchema"];
-	xsd.prefix = @"xsd";
-	
-	[xsd addSimpleClassWithName:@"boolean" representationClass:@"USBoolean *"];
-	[xsd addSimpleClassWithName:@"byte" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"int" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"integer" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"nonNegativeInteger" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"positiveInteger" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"unsignedByte" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"unsignedInt" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"unsignedLong" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"unsignedShort" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"double" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"long" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"short" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"float" representationClass:@"NSNumber *"];
-	[xsd addSimpleClassWithName:@"dateTime" representationClass:@"NSDate *"];
-	[xsd addSimpleClassWithName:@"date" representationClass:@"NSDate *"];
-	[xsd addSimpleClassWithName:@"time" representationClass:@"NSDate *"];
-	[xsd addSimpleClassWithName:@"duration" representationClass:@"NSDate *"];
-	[xsd addSimpleClassWithName:@"base64Binary" representationClass:@"NSData *"];
-	[xsd addSimpleClassWithName:@"decimal" representationClass:@"NSDecimalNumber *"];
-	[xsd addSimpleClassWithName:@"QName" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"anyURI" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"string" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"normalizedString" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"token" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"language" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"Name" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"NCName" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"anyType" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"ID" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"ENTITY" representationClass:@"NSString *"];
-	[xsd addSimpleClassWithName:@"IDREF" representationClass:@"NSString *"];
+    USSchema *xsd = [self schemaForNamespace:@"http://www.w3.org/2001/XMLSchema"];
+    xsd.prefix = @"xsd";
+    
+    [xsd addSimpleClassWithName:@"boolean" representationClass:@"USBoolean *"];
+    [xsd addSimpleClassWithName:@"byte" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"int" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"integer" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"nonNegativeInteger" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"positiveInteger" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"unsignedByte" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"unsignedInt" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"unsignedLong" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"unsignedShort" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"double" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"long" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"short" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"float" representationClass:@"NSNumber *"];
+    [xsd addSimpleClassWithName:@"dateTime" representationClass:@"NSDate *"];
+    [xsd addSimpleClassWithName:@"date" representationClass:@"NSDate *"];
+    [xsd addSimpleClassWithName:@"time" representationClass:@"NSDate *"];
+    [xsd addSimpleClassWithName:@"duration" representationClass:@"NSDate *"];
+    [xsd addSimpleClassWithName:@"base64Binary" representationClass:@"NSData *"];
+    [xsd addSimpleClassWithName:@"decimal" representationClass:@"NSDecimalNumber *"];
+    [xsd addSimpleClassWithName:@"QName" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"anyURI" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"string" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"normalizedString" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"token" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"language" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"Name" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"NCName" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"anyType" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"ID" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"ENTITY" representationClass:@"NSString *"];
+    [xsd addSimpleClassWithName:@"IDREF" representationClass:@"NSString *"];
 }
 
 @end

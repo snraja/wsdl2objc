@@ -25,34 +25,40 @@
 @class USWSDL;
 @class USSchema;
 
-typedef enum {
-	TypeBehavior_uninitialized = 0,
-	TypeBehavior_simple,
-	TypeBehavior_complex
-} TypeBehavior;
+//typedef enum {
+//    TypeBehavior_uninitialized = 0,
+//    TypeBehavior_simple,
+//    TypeBehavior_complex
+//} TypeBehavior;
+
+typedef NS_ENUM(NSUInteger, TypeBehavior) {
+    TypeBehavior_uninitialized = 0,
+    TypeBehavior_simple,
+    TypeBehavior_complex
+};
 
 @interface USType : NSObject {
-	
-	
+    
+    
 #pragma mark Global type fields
-	NSString *typeName;
-	USSchema *schema;
-	TypeBehavior behavior;
-	BOOL hasBeenParsed;
-	BOOL hasBeenWritten;
-	
-	
-	
+    NSString *typeName;
+    USSchema *__weak schema;
+    TypeBehavior behavior;
+    BOOL hasBeenParsed;
+    BOOL hasBeenWritten;
+    
+    
+    
 #pragma mark Simple type fields
-	NSString *representationClass;
-	NSMutableArray *enumerationValues;
-	
-	
-	
+    NSString *representationClass;
+    NSMutableArray *enumerationValues;
+    
+    
+    
 #pragma mark Complex type fields
-	USType *superClass;
-	NSMutableArray *sequenceElements;
-	NSMutableArray *attributes;
+    USType *superClass;
+    NSMutableArray *sequenceElements;
+    NSMutableArray *attributes;
 }
 
 #pragma mark Global type methods
@@ -67,7 +73,7 @@ typedef enum {
 - (NSString *)assignOrRetain;
 
 @property (nonatomic, copy) NSString *typeName;
-@property (nonatomic, assign) USSchema *schema;
+@property (nonatomic, weak) USSchema *schema;
 @property (nonatomic) TypeBehavior behavior;
 @property (nonatomic) BOOL hasBeenParsed;
 @property (nonatomic) BOOL hasBeenWritten;
@@ -80,16 +86,16 @@ typedef enum {
 
 #pragma mark Simple type methods
 @property (nonatomic, copy) NSString *representationClass;
-@property (nonatomic, retain) NSMutableArray *enumerationValues;
+@property (nonatomic, strong) NSMutableArray *enumerationValues;
 
 - (NSString *)enumCount;
 
 
 
 #pragma mark Complex type methods
-@property (nonatomic, retain) USType *superClass;
-@property (nonatomic, retain) NSMutableArray *sequenceElements;
-@property (nonatomic, retain) NSMutableArray *attributes;
+@property (nonatomic, strong) USType *superClass;
+@property (nonatomic, strong) NSMutableArray *sequenceElements;
+@property (nonatomic, strong) NSMutableArray *attributes;
 
 @end
 

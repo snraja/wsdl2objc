@@ -36,42 +36,35 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.wsdlName = nil;
-		self.type = nil;
-		self.schema = nil;
-		self.hasBeenParsed = NO;
-		self.waitingSeqElements = [NSMutableArray array];
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.wsdlName = nil;
+        self.type = nil;
+        self.schema = nil;
+        self.hasBeenParsed = NO;
+        self.waitingSeqElements = [NSMutableArray array];
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [wsdlName release];
-    [waitingSeqElements release];
-    [super dealloc];
-}
 
 - (void)setName:(NSString *)aName
 {
-	USObjCKeywords *keywords = [USObjCKeywords sharedInstance];
+    USObjCKeywords *keywords = [USObjCKeywords sharedInstance];
 
-	self.wsdlName = aName;
-	if([keywords isAKeyword:aName]) {
-		aName = [NSString stringWithFormat:@"%@_", aName];
-	}
-	
-	if(name != nil) [name autorelease];
-	name = [aName copy];
+    self.wsdlName = aName;
+    if([keywords isAKeyword:aName]) {
+        aName = [NSString stringWithFormat:@"%@_", aName];
+    }
+    
+//    if(name != nil) [name autorelease];
+    name = [aName copy];
 }
 
 - (NSString *)uname
 {
-	return [self.name stringWithCapitalizedFirstCharacter];
+    return [self.name stringWithCapitalizedFirstCharacter];
 }
 
 @end

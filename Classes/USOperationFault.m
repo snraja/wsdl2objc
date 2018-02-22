@@ -32,20 +32,14 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.message = nil;
-		self.operation = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.message = nil;
+        self.operation = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [message release];
-    [super dealloc];
-}
 
 @end

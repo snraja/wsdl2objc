@@ -26,12 +26,12 @@
 @class USType;
 
 @interface USWSDL : NSObject {
-	NSMutableArray *schemas;	
-	USSchema *targetNamespace;
+    NSMutableArray *schemas;    
+    USSchema *targetNamespace;
 }
 
-@property (nonatomic, retain) NSMutableArray *schemas;
-@property (nonatomic, retain) USSchema *targetNamespace;
+@property (nonatomic, strong) NSMutableArray *schemas;
+@property (nonatomic, strong) USSchema *targetNamespace;
 
 - (id)init;
 - (void)dealloc;

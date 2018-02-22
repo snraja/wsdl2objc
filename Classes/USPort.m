@@ -34,22 +34,15 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.binding = nil;
-		self.address = nil;
-		self.service = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.binding = nil;
+        self.address = nil;
+        self.service = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [binding release];
-    [address release];
-    [super dealloc];
-}
 
 @end

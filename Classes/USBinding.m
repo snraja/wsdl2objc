@@ -36,59 +36,52 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.portType = [[USPortType new] autorelease];
+    if((self = [super init])) {
+        self.name = nil;
+        self.portType = [USPortType new];
         self.soapVersion = @"1.1";
-		self.schema = nil;
-	}
-	
-	return self;
+        self.schema = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [portType release];
-    [soapVersion release];
-    [super dealloc];
-}
 
 - (NSString *)className
 {
-	NSString *result = [[self.name componentsSeparatedByCharactersInSet:kIllegalClassCharactersSet] componentsJoinedByString:@""];
-	if(![result.lowercaseString hasSuffix:@"binding"])
-		result = [result stringByAppendingString:@"Binding"];
-	return result;
+    NSString *result = [[self.name componentsSeparatedByCharactersInSet:kIllegalClassCharactersSet] componentsJoinedByString:@""];
+    if(![result.lowercaseString hasSuffix:@"binding"])
+        result = [result stringByAppendingString:@"Binding"];
+    return result;
 }
 
 - (NSMutableArray *)operations
 {
-	return self.portType.operations;
+    return self.portType.operations;
 }
 
 - (NSString *)templateFileHPath
 {
-	return [[NSBundle mainBundle] pathForTemplateNamed:@"Binding_H"];
+    return [[NSBundle mainBundle] pathForTemplateNamed:@"Binding_H"];
 }
 
 - (NSString *)templateFileMPath
 {
-	return [[NSBundle mainBundle] pathForTemplateNamed:@"Binding_M"];
+    return [[NSBundle mainBundle] pathForTemplateNamed:@"Binding_M"];
 }
 
 - (NSDictionary *)templateKeyDictionary
 {
-	NSMutableDictionary *returning = [NSMutableDictionary dictionary];
-	
-	[returning setObject:self.name forKey:@"name"];
-	[returning setObject:self.className forKey:@"className"];
-	[returning setObject:self.portType forKey:@"portType"];
-	[returning setObject:self.soapVersion forKey:@"soapVersion"];
-	[returning setObject:[self operations] forKey:@"operations"];
-	[returning setObject:self.schema forKey:@"schema"];
-	
-	return returning;
+    NSMutableDictionary *returning = [NSMutableDictionary dictionary];
+    
+    [returning setObject:self.name forKey:@"name"];
+    [returning setObject:self.className forKey:@"className"];
+    [returning setObject:self.portType forKey:@"portType"];
+    [returning setObject:self.soapVersion forKey:@"soapVersion"];
+    [returning setObject:[self operations] forKey:@"operations"];
+    [returning setObject:self.schema forKey:@"schema"];
+    
+    return returning;
 }
 
 @end

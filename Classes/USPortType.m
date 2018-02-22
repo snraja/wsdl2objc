@@ -32,37 +32,30 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.operations = [NSMutableArray array];
-		self.schema = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.operations = [NSMutableArray array];
+        self.schema = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [operations release];
-    [super dealloc];
-}
 
 - (USOperation *)operationForName:(NSString *)aName
 {
-	for(USOperation *operation in self.operations) {
-		if([operation.name isEqualToString:aName]) {
-			return operation;
-		}
-	}
-	
-	USOperation *newOperation = [USOperation new];
-	newOperation.name = aName;
-	newOperation.portType = self;
-	[self.operations addObject:newOperation];
-    [newOperation release];
-	
-	return newOperation;
+    for(USOperation *operation in self.operations) {
+        if([operation.name isEqualToString:aName]) {
+            return operation;
+        }
+    }
+    
+    USOperation *newOperation = [USOperation new];
+    newOperation.name = aName;
+    newOperation.portType = self;
+    [self.operations addObject:newOperation];
+    
+    return newOperation;
 }
 
 @end

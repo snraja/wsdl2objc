@@ -26,13 +26,13 @@
 @class USOperation;
 
 @interface USOperationFault : NSObject {
-	NSString *name;
-	USMessage *message;
-	USOperation *operation;
+    NSString *name;
+    USMessage *message;
+    USOperation *__unsafe_unretained operation;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) USMessage *message;
-@property (nonatomic, assign) USOperation *operation;
+@property (nonatomic, strong) USMessage *message;
+@property (nonatomic, unsafe_unretained) USOperation *operation;
 
 @end

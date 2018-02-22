@@ -32,52 +32,45 @@
 
 - (id)init
 {
-	if((self = [super init]))
-	{
-		self.name = @"";
-		self.wsdlName = @"";
-		self.schema = nil;
-		self.attributeDefault = @"";
-		type = nil;
-	}
-	return self;
+    if((self = [super init]))
+    {
+        self.name = @"";
+        self.wsdlName = @"";
+        self.schema = nil;
+        self.attributeDefault = @"";
+        type = nil;
+    }
+    return self;
 }
 
-- (void)dealloc
-{
-	[name release];
-	[wsdlName release];
-	[attributeDefault release];
-	[super dealloc];
-}
 
 - (NSDictionary *)templateKeyDictionary
 {
-	NSMutableDictionary *returning = [NSMutableDictionary dictionary];
-	
-	[returning setObject:self.name forKey:@"name"];
-	[returning setObject:self.type.typeName forKey:@"typeName"];
-	[returning setObject:self.attributeDefault forKey:@"default"];
-	
-	return returning;
+    NSMutableDictionary *returning = [NSMutableDictionary dictionary];
+    
+    [returning setObject:self.name forKey:@"name"];
+    [returning setObject:self.type.typeName forKey:@"typeName"];
+    [returning setObject:self.attributeDefault forKey:@"default"];
+    
+    return returning;
 }
 
 - (NSString *)name
 {
-	return name;
+    return name;
 }
 
 - (void)setName:(NSString *)aName
 {
-	USObjCKeywords *keywords = [USObjCKeywords sharedInstance];
-	
-	self.wsdlName = aName;
-	if([keywords isAKeyword:aName]) {
-		aName = [NSString stringWithFormat:@"%@_", aName];
-	}
-	
-	if(name != nil) [name autorelease];
-	name = [aName copy];
+    USObjCKeywords *keywords = [USObjCKeywords sharedInstance];
+    
+    self.wsdlName = aName;
+    if([keywords isAKeyword:aName]) {
+        aName = [NSString stringWithFormat:@"%@_", aName];
+    }
+    
+//    if(name != nil) [name autorelease];
+    name = [aName copy];
 }
 
 @end

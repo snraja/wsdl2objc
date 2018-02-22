@@ -26,18 +26,18 @@
 @class USOperation;
 
 @interface USOperationInterface : NSObject {
-	NSString *name;
-	NSMutableArray *headers; //Array of USElements
-	USMessage *body;
-	
-	USOperation *operation;
+    NSString *name;
+    NSMutableArray *headers; //Array of USElements
+    USMessage *body;
+    
+    USOperation *__weak operation;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) NSMutableArray *headers;
-@property (nonatomic, retain) USMessage *body;
-@property (nonatomic, assign) USOperation *operation;
-@property (nonatomic, readonly) NSString *className;
+@property (nonatomic, strong) NSMutableArray *headers;
+@property (nonatomic, strong) USMessage *body;
+@property (nonatomic, weak) USOperation *operation;
+@property (weak, nonatomic, readonly) NSString *className;
 
 + (USOperationInterface *)operationInterfaceForOperation:(USOperation *)operation;
 

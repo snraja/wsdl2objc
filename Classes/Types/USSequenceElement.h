@@ -24,18 +24,18 @@
 #import "UStype.h"
 
 @interface USSequenceElement : NSObject <NSCopying> {
-	NSInteger minOccurs;
-	NSInteger maxOccurs;
-	NSString *name;
-	NSString *wsdlName;
-	USType * type;
+    NSInteger minOccurs;
+    NSInteger maxOccurs;
+    NSString *name;
+    NSString *wsdlName;
+    USType * __weak type;
 }
 
 @property (nonatomic) NSInteger minOccurs; /* -1 represents 'unbounded' */
 @property (nonatomic) NSInteger maxOccurs; /* -1 represents 'unbounded' */
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) NSString *wsdlName;
-@property (nonatomic, assign) USType * type;
+@property (nonatomic, strong) NSString *wsdlName;
+@property (nonatomic, weak) USType * type;
 
 - (NSString *)uname;
 - (NSString *)useAnArray;

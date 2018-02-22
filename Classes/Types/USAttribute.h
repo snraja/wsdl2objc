@@ -24,18 +24,18 @@
 #import "USType.h"
 
 @interface USAttribute : NSObject {
-	NSString *name;
-	NSString *wsdlName;
-	NSString *attributeDefault;
-	USSchema *schema;
-	USType   *type;
+    NSString *name;
+    NSString *wsdlName;
+    NSString *attributeDefault;
+    USSchema *__unsafe_unretained schema;
+    USType   *__weak type;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) NSString *wsdlName;
+@property (nonatomic, strong) NSString *wsdlName;
 @property (nonatomic, copy) NSString *attributeDefault;
-@property (nonatomic, assign) USSchema * schema;
-@property (nonatomic, assign) USType * type;
+@property (nonatomic, unsafe_unretained) USSchema * schema;
+@property (nonatomic, weak) USType * type;
 
 - (id)init;
 - (void)dealloc;

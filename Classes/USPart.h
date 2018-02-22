@@ -26,14 +26,14 @@
 @class USMessage;
 
 @interface USPart : NSObject {
-	NSString *name;
-	USElement *element;
-	USMessage *message;
+    NSString *name;
+    USElement *element;
+    USMessage *__weak message;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) USElement *element;
-@property (nonatomic, assign) USMessage *message;
+@property (nonatomic, strong) USElement *element;
+@property (nonatomic, weak) USMessage *message;
 
 - (NSString *)uname;
 

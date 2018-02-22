@@ -37,47 +37,40 @@
 
 + (USOperationInterface *)operationInterfaceForOperation:(USOperation *)operation
 {
-	USOperationInterface *interface = [[USOperationInterface new] autorelease];
-	interface.operation = operation;
-	
-	return interface;
+    USOperationInterface *interface = [USOperationInterface new];
+    interface.operation = operation;
+    
+    return interface;
 }
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.headers = [NSMutableArray array];
-		self.body = nil;
-		self.operation = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.headers = [NSMutableArray array];
+        self.body = nil;
+        self.operation = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [headers release];
-    [body release];
-    [super dealloc];
-}
 
 - (NSString *)className
 {
-	NSMutableArray *parts = self.body.parts;
-	if([parts count] == 1) {
-		USPart *bodyPart = [parts lastObject];
-		NSString *className = bodyPart.element.type.classNameWithPtr;
-		return className;
-	}
-	
-	return @"NSArray *";
+    NSMutableArray *parts = self.body.parts;
+    if([parts count] == 1) {
+        USPart *bodyPart = [parts lastObject];
+        NSString *className = bodyPart.element.type.classNameWithPtr;
+        return className;
+    }
+    
+    return @"NSArray *";
 }
 
 - (NSString *)hasHeaders
 {
-	return ([headers count] > 0 ? @"true" : @"false");
+    return ([headers count] > 0 ? @"true" : @"false");
 }
 
 @end

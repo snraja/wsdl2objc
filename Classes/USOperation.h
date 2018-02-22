@@ -27,22 +27,22 @@
 @class USOperationFault;
 
 @interface USOperation : NSObject {
-	NSString *name;
-	NSString *soapAction;
-	USOperationInterface *input;
-	USOperationInterface *output;
-	NSMutableArray *faults;
-	
-	USPortType *portType;
+    NSString *name;
+    NSString *soapAction;
+    USOperationInterface *input;
+    USOperationInterface *output;
+    NSMutableArray *faults;
+    
+    USPortType *__weak portType;
 }
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *soapAction;
-@property (nonatomic, retain) USOperationInterface *input;
-@property (nonatomic, retain) USOperationInterface *output;
-@property (nonatomic, retain) NSMutableArray *faults;
-@property (nonatomic, assign) USPortType *portType;
-@property (nonatomic, readonly) NSString* className;
+@property (nonatomic, strong) USOperationInterface *input;
+@property (nonatomic, strong) USOperationInterface *output;
+@property (nonatomic, strong) NSMutableArray *faults;
+@property (nonatomic, weak) USPortType *portType;
+@property (weak, nonatomic, readonly) NSString* className;
 
 - (USOperationFault *)faultForName:(NSString *)aName;
 

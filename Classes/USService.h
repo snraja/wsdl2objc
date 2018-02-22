@@ -26,16 +26,16 @@
 @class USSchema;
 
 @interface USService : NSObject {
-	NSString *name;
-	NSMutableArray *ports;
-	
-	USSchema *schema;
+    NSString *name;
+    NSMutableArray *ports;
+    
+    USSchema *__unsafe_unretained schema;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) NSMutableArray *ports;
-@property (nonatomic, assign) USSchema *schema;
-@property (nonatomic, readonly) NSString *className;
+@property (nonatomic, strong) NSMutableArray *ports;
+@property (nonatomic, unsafe_unretained) USSchema *schema;
+@property (weak, nonatomic, readonly) NSString *className;
 
 - (USPort *)portForName:(NSString *)aName;
 

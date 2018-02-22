@@ -34,35 +34,35 @@
 
 
 @interface USSchema : NSObject {
-	NSString *fullName;
-	NSString *prefix;
-	NSString *localPrefix;
-	NSMutableArray *types;
-	NSMutableArray *elements;
-	NSMutableArray *attributes;
-	NSMutableArray *imports;
-	NSMutableArray *messages;
-	NSMutableArray *portTypes;
-	NSMutableArray *bindings;
-	NSMutableArray *services;
-	USWSDL *wsdl;
-	
-	BOOL hasBeenParsed;
-	BOOL hasBeenWritten;
+    NSString *fullName;
+    NSString *prefix;
+    NSString *localPrefix;
+    NSMutableArray *types;
+    NSMutableArray *elements;
+    NSMutableArray *attributes;
+    NSMutableArray *imports;
+    NSMutableArray *messages;
+    NSMutableArray *portTypes;
+    NSMutableArray *bindings;
+    NSMutableArray *services;
+    USWSDL *__unsafe_unretained wsdl;
+    
+    BOOL hasBeenParsed;
+    BOOL hasBeenWritten;
 }
 
-@property (nonatomic, copy) NSString *prefix;			// unique global schema prefix (after all includes)
-@property (nonatomic, copy) NSString *localPrefix;		// specified schema prefix within local scope
+@property (nonatomic, copy) NSString *prefix;            // unique global schema prefix (after all includes)
+@property (nonatomic, copy) NSString *localPrefix;        // specified schema prefix within local scope
 @property (nonatomic, copy) NSString *fullName;
-@property (nonatomic, retain) NSMutableArray *types;
-@property (nonatomic, retain) NSMutableArray *elements;
-@property (nonatomic, retain) NSMutableArray *attributes;
-@property (nonatomic, retain) NSMutableArray *imports;
-@property (nonatomic, retain) NSMutableArray *messages;
-@property (nonatomic, retain) NSMutableArray *portTypes;
-@property (nonatomic, retain) NSMutableArray *bindings;
-@property (nonatomic, retain) NSMutableArray *services;
-@property (nonatomic, assign) USWSDL *wsdl;
+@property (nonatomic, strong) NSMutableArray *types;
+@property (nonatomic, strong) NSMutableArray *elements;
+@property (nonatomic, strong) NSMutableArray *attributes;
+@property (nonatomic, strong) NSMutableArray *imports;
+@property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic, strong) NSMutableArray *portTypes;
+@property (nonatomic, strong) NSMutableArray *bindings;
+@property (nonatomic, strong) NSMutableArray *services;
+@property (nonatomic, unsafe_unretained) USWSDL *wsdl;
 @property (nonatomic) BOOL hasBeenParsed;
 @property (nonatomic) BOOL hasBeenWritten;
 

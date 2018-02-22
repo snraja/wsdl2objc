@@ -26,17 +26,17 @@
 @class USPart;
 
 @interface USMessage : NSObject {
-	NSString *name;
-	NSMutableArray *parts;
-	BOOL hasBeenParsed;
-	
-	USSchema *schema;
+    NSString *name;
+    NSMutableArray *parts;
+    BOOL hasBeenParsed;
+    
+    USSchema *__unsafe_unretained schema;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) NSMutableArray *parts;
+@property (nonatomic, strong) NSMutableArray *parts;
 @property (nonatomic) BOOL hasBeenParsed;
-@property (nonatomic, assign) USSchema *schema;
+@property (nonatomic, unsafe_unretained) USSchema *schema;
 
 - (USPart *)partForName:(NSString *)aName;
 

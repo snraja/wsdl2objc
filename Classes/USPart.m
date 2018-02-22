@@ -34,25 +34,19 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.element = nil;
-		self.message = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.element = nil;
+        self.message = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [element release];
-    [super dealloc];
-}
 
 - (NSString *)uname
 {
-	return [self.name stringWithCapitalizedFirstCharacter];
+    return [self.name stringWithCapitalizedFirstCharacter];
 }
 
 @end

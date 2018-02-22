@@ -31,51 +31,45 @@
 @synthesize wsdlName;
 @synthesize type;
 
-- (void) dealloc
-{
-    [name release];
-    [wsdlName release];
-    [super dealloc];
-}
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	USSequenceElement *newSeqElement = [USSequenceElement new];
-	
-	newSeqElement.minOccurs = self.minOccurs;
-	newSeqElement.maxOccurs = self.maxOccurs;
-	newSeqElement.name = self.name;
-	newSeqElement.wsdlName = self.wsdlName;
-	newSeqElement.type = self.type;
-	
-	return newSeqElement;
+    USSequenceElement *newSeqElement = [USSequenceElement new];
+    
+    newSeqElement.minOccurs = self.minOccurs;
+    newSeqElement.maxOccurs = self.maxOccurs;
+    newSeqElement.name = self.name;
+    newSeqElement.wsdlName = self.wsdlName;
+    newSeqElement.type = self.type;
+    
+    return newSeqElement;
 }
 
 - (void)setName:(NSString *)aName
 {
-	USObjCKeywords *keywords = [USObjCKeywords sharedInstance];
-	
-	self.wsdlName = aName;
-	if([keywords isAKeyword:aName]) {
-		aName = [NSString stringWithFormat:@"%@_", aName];
-	}
-	
-	if(name != nil) [name autorelease];
-	name = [aName copy];
+    USObjCKeywords *keywords = [USObjCKeywords sharedInstance];
+    
+    self.wsdlName = aName;
+    if([keywords isAKeyword:aName]) {
+        aName = [NSString stringWithFormat:@"%@_", aName];
+    }
+    
+//    if(name != nil) [name autorelease];
+    name = [aName copy];
 }
 
 - (NSString *)uname
 {
-	return [self.name stringWithCapitalizedFirstCharacter];
+    return [self.name stringWithCapitalizedFirstCharacter];
 }
 
 - (NSString *)useAnArray
 {
-	if(self.maxOccurs == 0 || self.maxOccurs == 1) {
-		return @"false";
-	}
-	
-	return @"true";
+    if(self.maxOccurs == 0 || self.maxOccurs == 1) {
+        return @"false";
+    }
+    
+    return @"true";
 }
 
 @end

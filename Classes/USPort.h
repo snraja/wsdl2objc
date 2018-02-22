@@ -26,16 +26,16 @@
 @class USService;
 
 @interface USPort : NSObject {
-	NSString *name;
-	USBinding *binding;
-	NSString *address;
-	
-	USService *service;
+    NSString *name;
+    USBinding *binding;
+    NSString *address;
+    
+    USService *__weak service;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, retain) USBinding *binding;
+@property (nonatomic, strong) USBinding *binding;
 @property (nonatomic, copy) NSString *address;
-@property (nonatomic, assign) USService *service;
+@property (nonatomic, weak) USService *service;
 
 @end

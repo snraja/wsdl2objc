@@ -34,38 +34,31 @@
 
 - (id)init
 {
-	if((self = [super init])) {
-		self.name = nil;
-		self.parts = [NSMutableArray array];
-		self.hasBeenParsed = NO;
-		self.schema = nil;
-	}
-	
-	return self;
+    if((self = [super init])) {
+        self.name = nil;
+        self.parts = [NSMutableArray array];
+        self.hasBeenParsed = NO;
+        self.schema = nil;
+    }
+    
+    return self;
 }
 
-- (void) dealloc
-{
-    [name release];
-    [parts release];
-    [super dealloc];
-}
 
 - (USPart *)partForName:(NSString *)aName
 {
-	for(USPart *part in self.parts) {
-		if([part.name isEqualToString:aName]) {
-			return part;
-		}
-	}
-	
-	USPart *newPart = [USPart new];
-	newPart.message = self;
-	newPart.name = aName;
-	[self.parts addObject:newPart];
-    [newPart release];
-	
-	return newPart;
+    for(USPart *part in self.parts) {
+        if([part.name isEqualToString:aName]) {
+            return part;
+        }
+    }
+    
+    USPart *newPart = [USPart new];
+    newPart.message = self;
+    newPart.name = aName;
+    [self.parts addObject:newPart];
+    
+    return newPart;
 }
 
 @end

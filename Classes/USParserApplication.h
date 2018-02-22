@@ -33,9 +33,9 @@
 #import "USWriter.h"
 
 @interface USParserApplication : NSObject {
-	BOOL parsing;
+    BOOL parsing;
 #ifdef APPKIT_EXTERN
-	NSString *statusString;
+    NSString *statusString;
 #endif
 }
 
@@ -51,8 +51,8 @@
 - (IBAction)parseWSDL:(id)sender;
 #endif
 
-@property (nonatomic, readonly) NSURL *wsdlURL;
-@property (nonatomic, readonly) NSURL *outURL;
+@property (strong, nonatomic, readonly) NSURL *wsdlURL;
+@property (strong, nonatomic, readonly) NSURL *outURL;
 #ifdef APPKIT_EXTERN
 @property (nonatomic, copy) NSString *statusString;
 @property (nonatomic) BOOL parsing;
