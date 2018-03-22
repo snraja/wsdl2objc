@@ -15,17 +15,7 @@
 #define kNSURLCredentialPersistence @"kNSURLCredentialPersistence"
 #define kValidateResult             @"kValidateResult"
 
-@interface %«className» : NSObject <%«className»ResponseDelegate> {
-	NSURL *address;
-	NSTimeInterval timeout;
-	NSMutableArray *cookies;
-	NSMutableDictionary *customHeaders;
-	BOOL logXMLInOut;
-	BOOL ignoreEmptyResponse;
-	BOOL synchronousOperationComplete;
-	id<SSLCredentialsManaging> sslManager;
-	SOAPSigner *soapSigner;
-}
+@interface %«className» : NSObject <%«className»ResponseDelegate>
 
 @property (nonatomic, copy) NSURL *address;
 @property (nonatomic) BOOL logXMLInOut;
@@ -50,13 +40,7 @@
 
 @end
 
-@interface %«className»Operation : NSOperation {
-	%«className» *binding;
-	%«className»Response *response;
-	id<%«className»ResponseDelegate> delegate;
-	NSMutableData *responseData;
-	NSURLConnection *urlConnection;
-}
+@interface %«className»Operation : NSOperation
 
 @property (nonatomic, strong) %«className» *binding;
 @property (nonatomic, readonly) %«className»Response *response;
@@ -69,18 +53,7 @@
 @end
 
 %FOREACH operation in operations
-@interface %«className»_%«operation.className» : %«className»Operation {
-%FOREACH part in operation.input.body.parts
-%IFDEF part.element.type.classNameWithPtr
-	%«part.element.type.classNameWithPtr» %«part.name»;
-%ENDIF
-%ENDFOR
-%FOREACH header in operation.input.headers
-%IFDEF header.type.classNameWithPtr
-	%«header.type.classNameWithPtr» %«header.name»;
-%ENDIF
-%ENDFOR
-}
+@interface %«className»_%«operation.className» : %«className»Operation
 
 %FOREACH part in operation.input.body.parts
 @property (nonatomic, %«part.element.type.assignOrRetain») %«part.element.type.classNameWithPtr» %«part.name»;
@@ -109,11 +82,7 @@
 
 @end
 
-@interface %«className»Response : NSObject {
-	NSArray *headers;
-	NSArray *bodyParts;
-	NSError *error;
-}
+@interface %«className»Response : NSObject 
 
 @property (nonatomic, strong) NSArray *headers;
 @property (nonatomic, strong) NSArray *bodyParts;
