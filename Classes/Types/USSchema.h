@@ -67,7 +67,6 @@
 @property (nonatomic) BOOL hasBeenWritten;
 
 - (id)initWithWSDL:(USWSDL *)aWsdl;
-- (void)dealloc;
 
 - (USType *)typeForName:(NSString *)aName;
 - (USElement *)elementForName:(NSString *)aName;

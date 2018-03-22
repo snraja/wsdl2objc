@@ -8,58 +8,26 @@
 
 %IFDEF superClass
 %IFDEF IsAttributedString
-@interface %«className» : NSObject <NSCoding> {
+@interface %«className» : NSObject <NSCoding>
 %ELSE
-@interface %«className» : %«superClass.classNameWithoutPtr» {
+@interface %«className» : %«superClass.classNameWithoutPtr»
 %ENDIF
 %ELSE
-@interface %«className» : NSObject <NSCoding> {
-SOAPSigner *soapSigner;
-%ENDIF
-
-%IFDEF IsAttributedString
-/* content */
-NSString *_content;
-%ENDIF
-
-/* elements */
-%IFDEF sequenceElements
-%FOREACH element in sequenceElements
-%IF element.useAnArray
-	NSMutableArray *%«element.name»;
-%ELSE
-	%«element.type.classNameWithPtr» %«element.name»;
-%ENDIF
-%ENDFOR
-%ENDIF
-
-/* attributes */
-%IFDEF attributes
-%FOREACH attribute in attributes
-	%«attribute.type.classNameWithPtr» %«attribute.name»;
-%ENDFOR
-%ENDIF
-
-}
-
-- (NSString *)nsPrefix;
-
-- (xmlNodePtr)xmlNodeForDoc:(xmlDocPtr)doc elementName:(NSString *)elName elementNSPrefix:(NSString *)elNSPrefix;
-- (void)addAttributesToNode:(xmlNodePtr)node;
-- (void)addElementsToNode:(xmlNodePtr)node;
-
-+ (%«classNameWithPtr»)deserializeNode:(xmlNodePtr)cur;
-- (void)deserializeAttributesFromNode:(xmlNodePtr)cur;
-- (void)deserializeElementsFromNode:(xmlNodePtr)cur;
-
-%IFNDEF superClass
-@property (retain) SOAPSigner *soapSigner;
+@interface %«className» : NSObject <NSCoding>
 %ENDIF
 
 %IFDEF IsAttributedString
 /* content */
 @property (nonatomic, retain) NSString *_content;
 %ENDIF
+
+- (NSString *)nsPrefix;
+- (xmlNodePtr)xmlNodeForDoc:(xmlDocPtr)doc elementName:(NSString *)elName elementNSPrefix:(NSString *)elNSPrefix;
+- (void)addAttributesToNode:(xmlNodePtr)node;
+- (void)addElementsToNode:(xmlNodePtr)node;
+- (void)deserializeAttributesFromNode:(xmlNodePtr)cur;
+- (void)deserializeElementsFromNode:(xmlNodePtr)cur;
+
 
 /* elements */
 %IFDEF sequenceElements
@@ -81,6 +49,11 @@ NSString *_content;
 %ENDFOR
 %ENDIF
 
+
++ (%«classNameWithPtr»)deserializeNode:(xmlNodePtr)cur;
+
 @end
+
+
 
 %ENDIF

@@ -293,12 +293,12 @@
 - (void)dealloc
 {
 %FOREACH part in operation.input.body.parts
-%IFEQ part.element.type.assignOrRetain retain
+%IFEQ part.element.type.assignOrRetain strong
 	if(%«part.name» != nil) [%«part.name» release];
 %ENDIF
 %ENDFOR
 %FOREACH header in operation.input.headers
-%IFEQ header.type.assignOrRetain retain
+%IFEQ header.type.assignOrRetain strong
 	if(%«header.name» != nil) [%«header.name» release];
 %ENDIF
 %ENDFOR
@@ -317,7 +317,7 @@
 %IFDEF operation.input.headers
 	headerElements = [NSMutableDictionary dictionary];
 %FOREACH header in operation.input.headers
-%IFEQ header.type.assignOrRetain retain
+%IFEQ header.type.assignOrRetain strong
 	if(%«header.name» != nil) [headerElements setObject:%«header.name» forKey:@"%«header.wsdlName»"];
 %ELSIFEQ header.type.typeName boolean
 	if(%«header.name» != nil) [headerElements setObject:[[[USBoolean alloc] initWithBool:*%«header.name»] autorelease] forKey:@"%«header.wsdlName»"];
@@ -362,7 +362,7 @@
 	bodyKeys = [NSMutableArray array];
 	id obj = nil;
 %FOREACH part in operation.input.body.parts
-%IFEQ part.element.type.assignOrRetain retain
+%IFEQ part.element.type.assignOrRetain strong
 	if(%«part.name» != nil) obj = %«part.name»;
 %ELSIFEQ part.element.type.typeName boolean
 	if(%«part.name» != nil) obj = [[[USBoolean alloc] initWithBool:*%«part.name»] autorelease];

@@ -38,7 +38,6 @@
 @property (nonatomic, weak) USType * type;
 
 - (id)init;
-- (void)dealloc;
 
 - (NSDictionary *)templateKeyDictionary;
 

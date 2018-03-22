@@ -34,7 +34,6 @@
 @property (nonatomic, strong) USSchema *targetNamespace;
 
 - (id)init;
-- (void)dealloc;
 - (void)addXSDSchema;
 
 - (USSchema *)schemaForNamespace:(NSString *)aNamespace;

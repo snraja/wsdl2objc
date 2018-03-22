@@ -1,9 +1,5 @@
 @implementation %«className»
 
-%IFNDEF superClass
-@synthesize soapSigner;
-%ENDIF
-
 %IFEQ superClass.className "NSString *"
 %IFDEF attributes
 %DEFINE IsAttributedString 1
@@ -14,15 +10,15 @@
 {
 	if((self = [super init])) {
 %IFDEF IsAttributedString
-_content = nil;
+self._content = nil;
 %ENDIF
 %IFDEF sequenceElements
 %FOREACH element in sequenceElements
 
 %IF element.useAnArray
-		%«element.name» = [[NSMutableArray alloc] init];
+		self.%«element.name» = [[NSMutableArray alloc] init];
 %ELSE
-		%«element.name» = 0;
+		self.%«element.name» = 0;
 %ENDIF
 
 %ENDFOR
@@ -30,38 +26,13 @@ _content = nil;
 
 %IFDEF attributes
 %FOREACH attribute in attributes
-		%«attribute.name» = 0;
+		self.%«attribute.name» = 0;
 %ENDFOR
 %ENDIF
 
 	}
 	
 	return self;
-}
-
-- (void)dealloc
-{
-%IFNDEF superClass
-	[soapSigner release];
-%ENDIF
-
-%IFDEF sequenceElements
-%FOREACH element in sequenceElements
-%IFEQ element.type.assignOrRetain retain
-	if(%«element.name» != nil) [%«element.name» release];
-%ENDIF
-%ENDFOR
-%ENDIF
-
-%IFDEF attributes
-%FOREACH attribute in attributes
-%IFEQ attribute.type.assignOrRetain retain
-	if(%«attribute.name» != nil) [%«attribute.name» release];
-%ENDIF
-%ENDFOR
-%ENDIF
-	
-	[super dealloc];
 }
 
 - (NSString *)nsPrefix
@@ -113,7 +84,7 @@ _content = nil;
 %IFDEF attributes
 %FOREACH attribute in attributes
 	if(self.%«attribute.name» != 0) {
-%IFEQ attribute.type.assignOrRetain retain
+%IFEQ attribute.type.assignOrRetain strong
 		xmlSetProp(node, (const xmlChar*)"%«attribute.wsdlName»", [[self.%«attribute.name» description] xmlString]);
 %ELSIFEQ attribute.type.typeName boolean
 		xmlSetProp(node, (const xmlChar*)"%«attribute.wsdlName»", (*self.%«attribute.name» ? (const xmlChar*)"true" : (const xmlChar*)"false"));
@@ -153,7 +124,7 @@ _content = nil;
 %IFDEF sequenceElements
 %FOREACH element in sequenceElements
 	if(self.%«element.name» != 0) {
-%IFEQ element.type.assignOrRetain retain
+%IFEQ element.type.assignOrRetain strong
 
 %IF element.useAnArray
 		for(%«element.type.classNameWithPtr» child in self.%«element.name») {
@@ -198,18 +169,11 @@ _content = nil;
 %ENDIF
 }
 
-%IFDEF IsAttributedString
-/* content */
-@synthesize _content;
-%ENDIF
-
 /* elements */
 %IFDEF sequenceElements
 %FOREACH element in sequenceElements
 
 %IF element.useAnArray
-
-@synthesize %«element.name»;
 
 - (void)add%«element.uname»:(%«element.type.classNameWithPtr»)toAdd
 {
@@ -222,7 +186,6 @@ _content = nil;
 
 %ELSE
 
-@synthesize %«element.name»;
 
 %ENDIF
 
@@ -236,8 +199,9 @@ _content = nil;
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+
 %FOREACH attribute in attributes
-%IFEQ attribute.type.assignOrRetain retain
+%IFEQ attribute.type.assignOrRetain strong
 	[attributes setObject:self.%«attribute.name» forKey:@"%«attribute.wsdlName»"];
 %ELSE
 	[attributes setObject:[NSNumber numberWithInt:(int)self.%«attribute.name»] forKey:@"%«attribute.wsdlName»"];
@@ -248,8 +212,6 @@ _content = nil;
 }
 
 %FOREACH attribute in attributes
-
-@synthesize %«attribute.name»;
 
 %ENDFOR
 %ENDIF
@@ -389,7 +351,7 @@ _content = nil;
 			}
 %FOREACH element in sequenceElements
 			if(xmlStrEqual(cur->name, (const xmlChar *) "%«element.wsdlName»")) {
-%IFEQ element.type.assignOrRetain retain
+%IFEQ element.type.assignOrRetain strong
 				
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
@@ -479,7 +441,6 @@ _content = nil;
 	}
 	if (self == nil) { return nil; }
  
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
 	for(int i = 0; i < numIvars; i++) {
@@ -490,7 +451,7 @@ _content = nil;
 		[self setValue:value forKey:key];
 	}
 	if (numIvars > 0) { free(ivars); }
-	[pool drain];
+
 	return self;
 }
 
@@ -498,7 +459,6 @@ _content = nil;
 	if ([super respondsToSelector:@selector(encodeWithCoder:)] && ![self isKindOfClass:[super class]]) {
 		[super performSelector:@selector(encodeWithCoder:) withObject:encoder];
 	}
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
 	for (int i = 0; i < numIvars; i++) {
@@ -508,7 +468,6 @@ _content = nil;
 		[encoder encodeObject:value forKey:key];
 	}
 	if (numIvars > 0) { free(ivars); }
-	[pool drain];
 }
 
 @end
