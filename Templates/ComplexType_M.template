@@ -359,7 +359,6 @@ self._content = nil;
 			
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
-				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 %FOREACH element in sequenceElements
