@@ -1,3 +1,16 @@
+@interface %«className» ()
+
+/* readonly in header will be readwrite in implementation file */
+%IFDEF sequenceElements
+%FOREACH element in sequenceElements
+%IF element.useAnArray
+@property (nonatomic, readwrite) NSMutableArray * %«element.name»;
+%ENDIF
+%ENDFOR
+%ENDIF
+
+@end
+
 @implementation %«className»
 
 %IFEQ superClass.className "NSString *"
@@ -178,9 +191,9 @@ self._content = nil;
 - (void)add%«element.uname»:(%«element.type.classNameWithPtr»)toAdd
 {
 %IFEQ element.type.assignOrRetain assign
-	[%«element.name» addObject:[NSNumber numberWithInt:(int)toAdd]];
+	[self.%«element.name» addObject:[NSNumber numberWithInt:(int)toAdd]];
 %ELSE
-	if(toAdd != nil) [%«element.name» addObject:toAdd];
+	if(toAdd != nil) [self.%«element.name» addObject:toAdd];
 %ENDIF
 }
 
@@ -433,12 +446,28 @@ self._content = nil;
 /* NSCoder functions taken from: 
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
-- (id) initWithCoder:(NSCoder *)decoder {
-	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]]) {
+- (id) initWithCoder:(NSCoder *)decoder
+{
+
+%IFDEF superClass
+%IFDEF IsAttributedString
+	self = [super init];
+%ELSE
+	self = [super  initWithCoder:decoder];
+%ENDIF
+%ELSE
+	self = [super init];
+%ENDIF
+
+
+/*	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
+	{
 		self = [super performSelector:@selector(initWithCoder:) withObject:decoder];
 	} else {
 		self = [super init];
 	}
+*/
+
 	if (self == nil) { return nil; }
  
 	unsigned int numIvars = 0;
