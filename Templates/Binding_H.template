@@ -18,14 +18,12 @@
 @interface %«className» : NSObject <%«className»ResponseDelegate>
 
 @property (nonatomic, copy) NSURL *address;
-@property (nonatomic) BOOL logXMLInOut;
-@property (nonatomic) BOOL ignoreEmptyResponse;
 @property (nonatomic) NSTimeInterval timeout;
 @property (nonatomic, strong) NSMutableArray *cookies;
 @property (nonatomic, strong) NSMutableDictionary *customHeaders;
-@property (nonatomic, strong) id<SSLCredentialsManaging> sslManager;
-@property (nonatomic, strong) SOAPSigner *soapSigner;
-
+@property (nonatomic, assign) BOOL logXMLInOut;
+@property (nonatomic, assign) BOOL ignoreEmptyResponse;
+@property (nonatomic, assign) BOOL synchronousOperationComplete;
 + (NSTimeInterval) defaultTimeout;
 
 - (id)initWithAddress:(NSString *)anAddress;
@@ -48,6 +46,7 @@
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) NSURLConnection *urlConnection;
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 - (id)initWithBinding:(%«className» *)aBinding delegate:(id<%«className»ResponseDelegate>)aDelegate;
 
 @end

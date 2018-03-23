@@ -219,7 +219,7 @@ self._content = nil;
 
 + (%«classNameWithPtr»)deserializeNode:(xmlNodePtr)cur
 {
-	%«className» *newObject = [[%«className» new] autorelease];
+	%«className» *newObject = [%«className» new];
 	
 %IFDEF IsAttributedString
 	// Set the string content
@@ -255,7 +255,7 @@ self._content = nil;
 		attrString = [NSString stringWithCString:(char*)attrValue encoding:NSUTF8StringEncoding];
 
 %IFEQ attribute.type.typeName boolean
-		self.%«attribute.name» = [[[USBoolean alloc] initWithBool:([attrString boolValue] ? YES : NO)] autorelease];
+		self.%«attribute.name» = [[USBoolean alloc] initWithBool:([attrString boolValue] ? YES : NO)];
 %ELSIFEQ attribute.type.typeName byte
 		self.%«attribute.name» = [NSNumber numberWithChar:[attrString intValue]];
 %ELSIFEQ attribute.type.typeName int
